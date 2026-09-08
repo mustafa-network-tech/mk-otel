@@ -1,0 +1,3 @@
+import type { Metadata } from 'next'; import './globals.css';
+export const metadata: Metadata={title:"Mavi Kadraj Otel | Bolu Merkez'de Modern Konaklama",description:"Bolu Merkez'de modern, konforlu ve keyifli bir konaklama deneyimi. Abant, Yedigöller, Gölcük ve Bolu yaylalarını Mavi Kadraj Otel'den keşfedin.",openGraph:{title:'Mavi Kadraj Otel | Bolu Merkez',description:"Bolu'nun merkezinde, göllere ve yaylalara uzanan modern bir konaklama deneyimi.",type:'website'}};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="tr"><body>{children}</body></html>}
