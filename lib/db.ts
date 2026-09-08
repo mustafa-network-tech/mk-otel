@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';import path from 'node:path';import fs from 'node:fs';
-const dbDir=path.join(process.cwd(),'data');fs.mkdirSync(dbDir,{recursive:true});
+const dbDir=process.env.VERCEL?path.join('/tmp','mavi-kadraj-data'):path.join(process.cwd(),'data');fs.mkdirSync(dbDir,{recursive:true});
 const db=new Database(path.join(dbDir,'booking.sqlite'));db.pragma('journal_mode = WAL');db.pragma('foreign_keys = ON');db.pragma('busy_timeout = 5000');
 db.exec(`
 CREATE TABLE IF NOT EXISTS room_types(id INTEGER PRIMARY KEY AUTOINCREMENT,room_type TEXT NOT NULL,slug TEXT NOT NULL UNIQUE,description TEXT NOT NULL,total_rooms INTEGER NOT NULL CHECK(total_rooms>=0),capacity_adults INTEGER NOT NULL,capacity_children INTEGER NOT NULL,base_price INTEGER NOT NULL,active INTEGER NOT NULL DEFAULT 1,images TEXT NOT NULL,features TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
