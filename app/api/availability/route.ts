@@ -1,2 +1,4 @@
 import {NextResponse} from 'next/server';import {searchAvailability} from '@/lib/booking-service';
-export const runtime='nodejs';export async function POST(request:Request){try{const b=await request.json();return NextResponse.json({rooms:searchAvailability({checkIn:String(b.checkIn||''),checkOut:String(b.checkOut||''),adults:Number(b.adults),children:Number(b.children)})});}catch(e){return NextResponse.json({error:e instanceof Error?e.message:'Müsaitlik sorgulanamadı.'},{status:400})}}
+export const runtime='nodejs';
+export const dynamic='force-dynamic';
+export async function POST(request:Request){try{const b=await request.json();return NextResponse.json({rooms:searchAvailability({checkIn:String(b.checkIn||''),checkOut:String(b.checkOut||''),adults:Number(b.adults),children:Number(b.children)})});}catch(e){return NextResponse.json({error:e instanceof Error?e.message:'Müsaitlik sorgulanamadı.'},{status:400})}}
