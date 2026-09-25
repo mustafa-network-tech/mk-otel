@@ -1,6 +1,7 @@
 import type BetterSqlite3 from 'better-sqlite3';
 import path from 'node:path';
 import fs from 'node:fs';
+import {rooms} from '@/data/rooms';
 
 type SqliteDb = BetterSqlite3.Database;
 let db: SqliteDb | undefined;
@@ -13,17 +14,12 @@ function seed(database: SqliteDb) {
   database.transaction(() => {
     const count = (database.prepare('SELECT COUNT(*) count FROM room_types').get() as {count: number}).count;
     if (count) return;
-    const types = [
-      ['Deluxe Orman Oda', 'deluxe-orman', 'Doğal dokular ve sakin orman tonlarıyla iki kişilik ferah oda.', 4, 2, 1, 250000, ['/images/boutique-room.png'], ['Klima', 'Yüksek hızlı Wi‑Fi', 'Özel banyo', 'Kahvaltı']],
-      ['Superior Aile Odası', 'superior-aile', 'Aileler ve uzun konaklamalar için geniş, işlevsel yaşam alanı.', 3, 3, 2, 340000, ['/images/boutique-room.png'], ['Klima', 'Yüksek hızlı Wi‑Fi', 'Özel banyo', 'Oturma alanı']],
-      ['Mavi Kadraj Suit', 'mavi-kadraj-suit', 'Bolu doğasından ilham alan, ayrı dinlenme alanlı özel suit.', 2, 2, 2, 420000, ['/images/boutique-room.png'], ['Klima', 'Yüksek hızlı Wi‑Fi', 'Özel banyo', 'Mini bar']],
-    ] as const;
     const insertType = database.prepare('INSERT INTO room_types(room_type,slug,description,total_rooms,capacity_adults,capacity_children,base_price,images,features) VALUES(?,?,?,?,?,?,?,?,?)');
     const insertRoom = database.prepare('INSERT INTO rooms(room_type_id,room_number) VALUES(?,?)');
     let seq = 101;
-    for (const t of types) {
-      const info = insertType.run(t[0], t[1], t[2], t[3], t[4], t[5], t[6], JSON.stringify(t[7]), JSON.stringify(t[8]));
-      for (let i = 0; i < t[3]; i++) insertRoom.run(info.lastInsertRowid, String(seq++));
+    for (const r of rooms) {
+      const info = insertType.run(r.name, r.slug, r.description, r.totalRooms, r.capacityAdults, r.capacityChildren, r.basePrice, JSON.stringify([r.image]), JSON.stringify(r.features));
+      for (let i = 0; i < r.totalRooms; i++) insertRoom.run(info.lastInsertRowid, String(seq++));
     }
   })();
 }

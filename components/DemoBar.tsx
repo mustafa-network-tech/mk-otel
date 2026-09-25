@@ -1,0 +1,3 @@
+import {ArrowUpRight} from '@phosphor-icons/react/dist/ssr'; import {siteConfig,developerLinks} from '@/data/site';
+/** Always-visible sample-project notice. Slim and fixed so it never competes with the hero. */
+export function DemoBar(){if(!siteConfig.demo)return null;return <aside className="demo-bar" aria-label="Örnek proje bildirimi"><b>Örnek proje</b><p><span className="demo-bar-long">{siteConfig.brandName} gerçek bir işletme değildir; {siteConfig.developerName}’in otel ve pansiyonlar için hazırladığı bir web sitesi demosudur.</span><span className="demo-bar-short">Gerçek bir otel değildir.</span></p><a href={developerLinks.project}>{siteConfig.developerName}<ArrowUpRight/></a></aside>}
