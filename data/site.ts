@@ -30,9 +30,11 @@ export const contactHref = (kind: 'phone' | 'whatsapp' | 'instagram' | 'maps') =
 /** True when the contact channel has a real value; empty channels are hidden instead of linking nowhere. */
 export const hasContact = (kind: 'phone' | 'whatsapp' | 'instagram' | 'maps') => contactHref(kind) !== '#iletisim';
 
+/** home: the generic MK signature; project: contextual "Bu projeyi inceleyin"; contact: MK WhatsApp naming this demo. */
 export const developerLinks = {
+  home: `${siteConfig.developerUrl}/tr`,
   project: `${siteConfig.developerUrl}/tr/work#${siteConfig.developerProjectId}`,
-  contact: `${siteConfig.developerUrl}/tr/contact?project=${siteConfig.developerProjectId}`,
+  contact: `https://wa.me/905456597551?text=${encodeURIComponent(`Merhaba MK Digital Systems, ${siteConfig.brandName} demo sitesini inceledim. İşletmem için benzer bir otel web sitesi ve rezervasyon akışı hakkında görüşmek istiyorum.`)}`,
 };
 
 /** Google Maps search for a public place (not the hotel's own location). */
